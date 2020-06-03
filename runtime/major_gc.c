@@ -376,9 +376,13 @@ static uintnat default_slice_budget() {
   caml_gc_message (0x40, "amount of work to do = %"
                          ARCH_INTNAT_PRINTF_FORMAT "uu\n",
                    (uintnat) (p * 1000000));
-  caml_gc_message (0x40, "ordered work = %ld words\n", (intnat)-1);
-  caml_gc_message (0x40, "opportunistic work credit = %ld words\n", opportunistic_credit);
-  caml_gc_message (0x40, "computed work = %ld words\n", computed_work);
+  caml_gc_message (0x40, "ordered work = %"
+                         ARCH_INTNAT_PRINTF_FORMAT "d words\n", (intnat)-1);
+  caml_gc_message (0x40, "opportunistic work credit = %"
+                         ARCH_INTNAT_PRINTF_FORMAT "d words\n",
+                         opportunistic_credit);
+  caml_gc_message (0x40, "computed work = %"
+                         ARCH_INTNAT_PRINTF_FORMAT "d words\n", computed_work);
 
   return computed_work;
 }

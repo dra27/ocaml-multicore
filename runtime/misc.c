@@ -64,7 +64,7 @@ void print_trace (void)
   strings = backtrace_symbols (array, size);
 #endif
 
-  caml_gc_log ("Obtained %zd stack frames.", size);
+  caml_gc_log ("Obtained %" ARCH_SIZET_PRINTF_FORMAT "d stack frames.", size);
 
   for (i = 0; i < size; i++)
     caml_gc_log ("%s", strings[i]);

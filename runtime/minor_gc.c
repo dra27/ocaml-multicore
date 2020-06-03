@@ -627,7 +627,8 @@ void caml_empty_minor_heap_promote (struct domain* domain, int participating_cou
   oldify_mopup (&st, 1); /* ephemerons promoted here */
   caml_ev_end("minor_gc/remembered_set/promote");
   caml_ev_end("minor_gc/remembered_set");
-  caml_gc_log("promoted %d roots, %lu bytes", remembered_roots, st.live_bytes);
+  caml_gc_log("promoted %d roots, %" ARCH_INTNAT_PRINTF_FORMAT "u bytes",
+              remembered_roots, st.live_bytes);
 
   caml_ev_begin("minor_gc/finalizers_admin");
   caml_gc_log("running stw minor_heap_domain_finalizers_admin");
