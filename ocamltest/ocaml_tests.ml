@@ -20,7 +20,7 @@ open Builtin_actions
 open Ocaml_actions
 
 let bytecode =
-  let opt_actions =
+  let _opt_actions =
   [
     setup_ocamlc_opt_build_env;
     ocamlc_opt;
@@ -37,7 +37,7 @@ let bytecode =
     check_ocamlc_byte_output;
     run;
     check_program_output;
-  ] @ (if Ocamltest_config.arch<>"none" then opt_actions else [])
+  ] @ (if Ocamltest_config.arch<>"none" then [] else [])
 }
 
 let native =
@@ -48,10 +48,11 @@ let native =
     check_ocamlopt_byte_output;
     run;
     check_program_output;
+    (*
     setup_ocamlopt_opt_build_env;
     ocamlopt_opt;
     check_ocamlopt_opt_output;
-    compare_native_programs;
+    compare_native_programs;*)
   ] in
   {
     test_name = "native";
