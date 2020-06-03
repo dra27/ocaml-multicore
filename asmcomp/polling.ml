@@ -71,7 +71,7 @@ let rec insert_poll_aux delta instr =
         (* | Iop (Itailcall_ind _) *)
         (* | Iop (Itailcall_imm _) *)
         (* | Iop (Iextcall _) *)
-        | Iop (Istackoffset _)
+        (*| Iop (Istackoffset _)*)
         (* | Iop (Iload _) *)
         (* | Iop (Iintop _) (* signal_alloc.ml *) *)
         | Iop (Inegf)
