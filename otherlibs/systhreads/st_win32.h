@@ -24,6 +24,8 @@
 
 #include <caml/osdeps.h>
 
+/* TODO Backport OCaml #1176 or fix with 4.11 rebase */
+#undef INLINE
 #define INLINE __inline
 
 #if 1
