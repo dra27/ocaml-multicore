@@ -9,6 +9,7 @@ jobs:
       matrix:
         operating-system: [windows-latest]
     steps:
+    - run: Get-MpPreference | Select-Object DisableRealtimeMonitoring
     - uses: actions/checkout@v2
       with:
         submodules: true
