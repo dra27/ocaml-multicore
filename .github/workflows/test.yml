@@ -7,13 +7,23 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [windows-latest]
+        operating-system: [windows-latest, ubuntu-latest, macos-latest]
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: true
     - uses: dra27/setup-ocaml@multicore
+      if: ${{ matrix.operating-system == 'windows-latest' }}
+    - run: git submodule deinit flexdll
+      if: ${{ matrix.operating-system != 'windows-latest' }}
     - run: bash -lc 'cd $GITHUB_WORKSPACE; ./configure --build=x86_64-pc-cygwin --host=x86_64-w64-mingw32'
+      if: ${{ matrix.operating-system == 'windows-latest' }}
+    - run: bash -lc 'cd $GITHUB_WORKSPACE; ./configure --prefix ~/inst'
+      if: ${{ matrix.operating-system != 'windows-latest' }}
     - run: bash -lc 'make -C $GITHUB_WORKSPACE -j flexdll'
+      if: ${{ matrix.operating-system == 'windows-latest' }}
     - run: bash -lc 'make -C $GITHUB_WORKSPACE -j world.opt'
-    - run: bash -lc 'OCAMLRUNPARAM=v=0,V=1 make -C $GITHUB_WORKSPACE/testsuite USE_RUNTIME=d all-enabled'
+    - run: bash -lc 'OCAMLRUNPARAM="v=0,V=1" make -C $GITHUB_WORKSPACE/testsuite USE_RUNTIME=d all-quick'
+      if: ${{ github.event_name == 'pull_request' }}
+    - run: bash -lc 'OCAMLRUNPARAM="v=0,V=1" make -C $GITHUB_WORKSPACE/testsuite USE_RUNTIME=d all-enabled'
+      if: ${{ github.event_name != 'pull_request' }}
