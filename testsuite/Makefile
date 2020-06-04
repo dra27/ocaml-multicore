@@ -109,6 +109,16 @@ check-failstamp:
 	  exit 1; \
 	fi
 
+.PHONY: all-quick
+all-quick: lib tools
+	@cat disabled | tr -d '\r' | sed -n 's/#.*//; /\//d; /./p' > disabled-dirs
+	@sed -e '/#/d' multicore-tests | fgrep -v -f disabled-dirs | \
+	  while read LINE; do \
+	    $(MAKE) $(NO_PRINT) exec-one DIR=tests/$$LINE; \
+	  done 2>&1 | tee _log
+	@rm disabled-dirs
+	@$(MAKE) report
+
 .PHONY: all-enabled
 all-enabled: lib tools
 	@cat disabled | tr -d '\r' | sed -n 's/#.*//; /\//d; /./p' > disabled-dirs
